@@ -14,10 +14,12 @@
         </div>
         <nav>
             <ul>
+                <li><span th:text="${#authentication.principal.employee.name}"></span></li>
+                <li><form method="post" th:action="@{/logout}"><input type="submit" value="ログアウト"></form></li>
             </ul>
         </nav>
     </header>
-    <h2>従業員の詳細</h2>
+        <h2>従業員の詳細</h2>
         <label for="code">社員番号</label>
         <p th:text="${employee.authentication.code}"></p>
         <label for="name">氏名</label>

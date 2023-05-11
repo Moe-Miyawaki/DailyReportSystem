@@ -2,6 +2,8 @@ package com.techacademy.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,9 @@ import com.techacademy.repository.EmployeeRepository;
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public EmployeeService(EmployeeRepository repository) {
         this.employeeRepository = repository;
@@ -34,7 +39,7 @@ public class EmployeeService {
     public Employee saveEmployee(Employee employee) {
         Authentication auth = employee.getAuthentication();
         auth.setEmployee(employee);
-        auth.setPassword(employee.getAuthentication().getPassword());
+        auth.setPassword(passwordEncoder.encode(employee.getAuthentication().getPassword()));
 
         return employeeRepository.save(employee);
     }
@@ -52,7 +57,7 @@ public class EmployeeService {
         if (employee.getAuthentication().getPassword() == "") {
             auth.setPassword(currentEmployee.getAuthentication().getPassword());
         } else {
-            auth.setPassword(employee.getAuthentication().getPassword());
+            auth.setPassword(passwordEncoder.encode(employee.getAuthentication().getPassword()));
         }
 
         return employeeRepository.save(currentEmployee);

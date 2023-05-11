@@ -34,6 +34,7 @@ public class EmployeeController {
         List<Employee> employeelist = service.getEmployeeList();
         model.addAttribute("employeelist", employeelist);
         model.addAttribute("size", employeelist.size());
+     // employee/list.htmlに画面遷移
         return "employee/list";
     }
     /** registを表示 */

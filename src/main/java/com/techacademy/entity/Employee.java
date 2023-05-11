@@ -60,4 +60,8 @@ public class Employee {
     @Valid
     private Authentication authentication;
 
+    @OneToMany(mappedBy="employee")
+    @Valid
+    private List<Report> report;
+
 }
